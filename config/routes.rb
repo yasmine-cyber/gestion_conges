@@ -5,8 +5,16 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-   # Utilisation de devise_scope pour définir la route root
-   devise_scope :user do
+  # Routes pour les demandes de congé
+  resources :leave_requests, only: [:index, :create, :update, :destroy] do
+    member do
+      post 'approve'  # Route pour approuver une demande de congé
+      post 'reject'   # Route pour rejeter une demande de congé
+    end
+  end
+
+  # Utilisation de devise_scope pour définir la route root
+  devise_scope :user do
     root 'users/sessions#new' # Redirige vers la page de connexion
   end
 
